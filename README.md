@@ -43,13 +43,10 @@ Different behaviors from the script can be triggered by using options. Each opti
 
 `python runner.py --file mcdonald.txt --stats`
 
-**--verbose**: shows all students in alphabetical order, with each comment's time stamp listed. Comment contents not shown. Asks for name of a text file to write to, otherwise writes to "output.txt". 
+**--verbose [FILE_NAME]**: shows all students in alphabetical order, with each comment's time stamp listed. Comment contents not shown. Asks for name of a text file to write to. File must be provided, the script will only edit local files if given permission with [FILE_NAME]
 
 `python runner.py --file mcdonald.txt --verbose newfile`
-will save the output into "newfile", creating it if it does not previously exist. The command
-
-`python runner.py --file mcdonald.txt --verbose`
-will save the output into "output.txt", which is the default destination if nothing is given.
+will save the output into "newfile", creating it if it does not previously exist.
 
 
 
