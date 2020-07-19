@@ -39,7 +39,7 @@ Different behaviors from the script can be triggered by using options. Each opti
 
 `python runner.py --file mcdonald.txt --names`
 
-**--stats**: shows all students in alphabetical order, with number comments and number of replies
+**--stats** (default): shows all students in alphabetical order, with number comments and number of replies
 
 `python runner.py --file mcdonald.txt --stats`
 
