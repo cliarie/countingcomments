@@ -22,8 +22,10 @@ Once the text file is saved (remember where it is), perform the following steps:
 5. Make sure you have python. Mac OS comes with Python, but it's good to be sure. In terminal, type `python --version` and the output should look something like `Python 3.x.x`. Any version 3 Python should work, if the numbers start with 2, that's also probably fine (but I'll need to check).
 
 6. In Terminal window, type the following commands, in succession, pressing 'Enter' after each command.
-```cd ~/Downloads/countingcomments-master
-python runner.py --file [FILE_NAME]```.
+```
+cd ~/Downloads/countingcomments-master
+python runner.py --file [FILE_NAME]
+```
 FILE_NAME is placeholder for the file. So for example, if my comments are copied into "content.txt", I would run `python runner.py --file content.txt` to analyze it. 
 
 
