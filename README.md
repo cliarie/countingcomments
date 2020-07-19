@@ -33,7 +33,7 @@ This should output each student who commented/replied, including the number of c
 
 ## Advanced Usage
 
-Different behaviors from the script can be triggered by using options. Each option will be followed with an example of the use case, on the sample text file "mcdonald.txt".
+Different behaviors from the script can be triggered by using options. Each option will be followed with an example of the use case, on the sample text file "mcdonald.txt". 
 
 **--names**: lists all the students who commented or replied, in alphabetical order by last name
 
@@ -48,7 +48,15 @@ Different behaviors from the script can be triggered by using options. Each opti
 `python runner.py --file mcdonald.txt --verbose newfile`
 will save the output into "newfile", creating it if it does not previously exist.
 
+Only option will be run at a time, and if multiple are entered only the first will be considered. So, for example, the command 
 
+`python runner.py --file mcdonald.txt --stats --verbose newfile`
+
+is equivalent to 
+
+`python runner.py --file mcdonald.txt --stats`
+
+as far as the program is concerned.
 
 
 
