@@ -60,7 +60,11 @@ is equivalent to
 
 as far as the program is concerned.
 
+## Suggestions/Comments?
 
+I want this to be as useful as possible, so I can expand capabilities or adjust the functionalites when desired. Of course if there is a bug or unexpected behavior please let me know and I'll fix it. 
+
+You can reach me at bguo + 'at' + caltech.edu
 
 
 
