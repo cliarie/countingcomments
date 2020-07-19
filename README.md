@@ -15,7 +15,7 @@ Once the text file is saved (remember where it is), perform the following steps:
 
 2. Open "countingcomments.zip" by clicking it. It should open a folder up. The folder should have a few files in it; make sure there is "runner.py", and "thread.py". 
 
-3. Move the text file (content.txt or whatever you named it) into the new folder (countingcomments-master)
+3. Move the text file (mcdonald.txt or whatever you named it) into the new folder (countingcomments-master)
 
 4. Open Terminal. Easiest way to do this is to Press ⌘(Cmd) + Space, typing "Terminal", and pressing enter. A terminal window should open.
 
@@ -26,7 +26,25 @@ Once the text file is saved (remember where it is), perform the following steps:
 cd ~/Downloads/countingcomments-master
 python runner.py --file [FILE_NAME]
 ```
-FILE_NAME is placeholder for the file. So for example, if my comments are copied into "content.txt", I would run `python runner.py --file content.txt` to analyze it. 
+FILE_NAME is placeholder for the file. So for example, if my comments are copied into "mcdonald.txt", I would run `python runner.py --file content.txt` to analyze it. 
+
+This should output each student who commented/replied, including the number of comments/replies the each made, sorted alphabetically. This is the default behavior. There are more specific, advanced use cases; however, every program call must contain "--file" and an existing file, or else the program will throw an error. 
+
+## Advanced Usage
+
+Different behaviors from the script can be triggered by using options. Each option will be followed with an example of the use case, on the sample text file "mcdonald.txt".
+
+**--names**: lists all the students who commented or replied, in alphabetical order by last name
+`python runner.py --file mcdonald.txt --names`
+
+**--stats**: shows all students in alphabetical order, with number comments and number of replies
+`python runner.py --file mcdonald.txt --stats`
+
+**--verbose**: shows all students in alphabetical order, with each comment's time stamp listed. Comment contents not shown. Asks for name of a text file to write to, otherwise writes to "output.txt". 
+`python runner.py --file mcdonald.txt --verbose newfile`
+will save the output into "newfile", creating it if it does not previously exist. The command
+`python runner.py --file mcdonald.txt --verbose`
+will save the output into "output.txt", which is the default destination if nothing is given.
 
 
 
