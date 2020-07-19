@@ -2,7 +2,7 @@
 
 This tool parses raw text input from a Google doc file and performs comprehension of comments and replies, and queries relevant data. Useful for getting simple statistics about comments (participants, frequency, content, etc.).
 
-Currently undergoing beta phase. Open source project.
+In beta (errors possible!). Open source project.
 
 ## Basic Usage
 **Instructions specific for Mac OS X. Windows integration coming soon...
