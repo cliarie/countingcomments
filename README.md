@@ -22,6 +22,7 @@ Once the text file is saved (remember where it is), perform the following steps:
 5. Make sure you have python. Mac OS comes with Python, but it's good to be sure. In terminal, type `python --version` and the output should look something like `Python 3.x.x`. Any version 3 Python should work, if the numbers start with 2, that's also probably fine (but I'll need to check).
 
 6. In Terminal window, type the following commands, in succession, pressing 'Enter' after each command.
+
 ```
 cd ~/Downloads/countingcomments-master
 python runner.py --file [FILE_NAME]
@@ -35,14 +36,18 @@ This should output each student who commented/replied, including the number of c
 Different behaviors from the script can be triggered by using options. Each option will be followed with an example of the use case, on the sample text file "mcdonald.txt".
 
 **--names**: lists all the students who commented or replied, in alphabetical order by last name
+
 `python runner.py --file mcdonald.txt --names`
 
 **--stats**: shows all students in alphabetical order, with number comments and number of replies
+
 `python runner.py --file mcdonald.txt --stats`
 
 **--verbose**: shows all students in alphabetical order, with each comment's time stamp listed. Comment contents not shown. Asks for name of a text file to write to, otherwise writes to "output.txt". 
+
 `python runner.py --file mcdonald.txt --verbose newfile`
 will save the output into "newfile", creating it if it does not previously exist. The command
+
 `python runner.py --file mcdonald.txt --verbose`
 will save the output into "output.txt", which is the default destination if nothing is given.
 
