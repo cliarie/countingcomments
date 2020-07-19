@@ -50,6 +50,26 @@ will save the output into "newfile", creating it if it does not previously exist
 
 ## Notes
 
+### What exactly is counted? 
+
+I filter out certain types of messages that show up in the comment box. Everything is a "comment" to this program unless: 
+
+1) It is a suggestion (Add, Delete, etc. )
+
+2) It is Resolved and NOT Re-opened. 
+
+I filter out certain replies that show up in the comment box. Everything is a "reply" to this program unless:
+
+1) It is a comment (obviously)
+
+2) It is a reply to a suggestion.
+
+3) It is a reply to something Resolved and NOT Re-opened.
+
+4) The act of resolving or re-opening is not a reply, even if the comment is eventually Re-opened. 
+
+### On multiple options
+
 Only option will be run at a time, and if multiple are entered only the first will be considered. So, for example, the command 
 
 `python runner.py --file mcdonald.txt --stats --verbose newfile`
