@@ -48,6 +48,8 @@ Different behaviors from the script can be triggered by using options. Each opti
 `python runner.py --file mcdonald.txt --verbose newfile`
 will save the output into "newfile", creating it if it does not previously exist.
 
+## Notes
+
 Only option will be run at a time, and if multiple are entered only the first will be considered. So, for example, the command 
 
 `python runner.py --file mcdonald.txt --stats --verbose newfile`
