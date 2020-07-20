@@ -1,6 +1,7 @@
 
 import sys
 import argparse
+import re
 from thread import Thread
 import time
 
@@ -21,8 +22,21 @@ def read_path(path):
     contents = []
     with open(path, "r") as input:
         lines = input.readlines()
+
+        ## Get the case where the first name is copied fully
+        ## Assert: the first line contains the name of the first comment, which must be then repeated
+        ## in the next line, alone with time stamp. If this is not, then force it.
+        if lines[1].find(lines[0]) < 0:
+            m = re.search(r"\d", lines[0])
+            if m is not None:
+                start = m.start()
+            else:
+                start = 0
+            name = lines[0][:start]
+            lines = [name] + lines
+
         markers = []
-        lines = [x.replace("\n", "") for x in lines if x.find("\n")>=0]
+        lines = [x.replace("\n", "") if x.find("\n")>=0 else x for x in lines ]
         for i in range(len(lines)-1):
             if lines[i+1].find(lines[i]) >=0:
                 lines[i+1] = lines[i+1].replace(lines[i], "")
