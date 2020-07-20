@@ -27,7 +27,7 @@ Once the text file is saved (remember where it is), perform the following steps:
 cd ~/Downloads/countingcomments-master
 python runner.py --file [FILE_NAME]
 ```
-FILE_NAME is placeholder for the file. So for example, if my comments are copied into "mcdonald.txt", I would run `python runner.py --file content.txt` to analyze it. 
+FILE_NAME is placeholder for the file. So for example, if my comments are copied into "mcdonald.txt", I would run `python runner.py --file mcdonald.txt` to analyze it. 
 
 This should output each student who commented/replied, including the number of comments/replies the each made, sorted alphabetically. This is the default behavior. There are more specific, advanced use cases; however, every program call must contain "--file" and an existing file, or else the program will throw an error. 
 
