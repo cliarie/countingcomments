@@ -32,13 +32,20 @@ class Thread():
         return self.comments
     def get_users(self):
         return self.users
-
+    def get_selected(self):
+        return self.selected
     def get_time_for_name(self, name):
         total = []
+        # 1 for comment, 0 for reply
+        comment = []
         for i in range(len(self.users)):
             if self.users[i] == name:
-                 total.append(self.times[i])
-        return total
+                if i == 0:
+                    comment.append(1)
+                else:
+                    comment.append(0)
+                total.append(self.times[i])
+        return total, comment
 
     # To string for printing
     def to_string(self):

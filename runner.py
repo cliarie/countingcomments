@@ -76,8 +76,8 @@ def main():
     parser.add_argument('--stats', action = 'store_true', help = "Shows all students in alphabetical order, with number of comments and number of replies")
     parser.add_argument('--verbose', metavar = "output", type = str, help = "Shows all students in alphabetical order, with sequenced list of each reply. \
                                                                             No reply contents. Writes it to an output file.")
-    parser.add_argument('--cleaned', metavar = "output", type = str, help = "Writes to output file of the comments on the google doc, cleaned up from automated\
-                                                                            messages")
+    parser.add_argument('--full', metavar = "output", type = str, help = "Writes to output file of the comments on the google doc, cleaned up from automated\
+                                                                            messages, in the order they appear on the document")
     args = parser.parse_args()
 
 
@@ -127,18 +127,22 @@ def main():
     elif args.verbose:
         writer = open(args.verbose, "w")
         writer.write("List of all timestamps of comments for each student. Students sorted alphabetically and timestamps"\
-                     + "sorted in reverse chronology.\n")
+                     + " sorted in reverse chronology.\n")
         names  = []
         for thread in master:
             names = names + thread.get_users()
         names = list(set(names))
+        names = sort_alphabetical(names)
 
         for name in names:
             times = []
+            types = []
             writer.write("NAME: " + name + "\n")
             for thread in master:
                 if name in thread.get_users():
-                    times = times + thread.get_time_for_name(name)
+                    temp_time, temp_type = thread.get_time_for_name(name)
+                    times = times + temp_time
+                    types = types + temp_type
             ## Need to sort these before reporting
             temp = times.copy()
             for i in range(len(times)):
@@ -146,11 +150,28 @@ def main():
                     k = times[i].find(" (")
                     temp[i] = temp[i][:k]
 
-            temp.sort(key = lambda x: time.strptime(x, "%I:%M %p %b %d"), reverse = True)
-            for t in temp:
-                writer.write(t + "\n")
+            final_times, final_types = zip(*sorted(zip(temp, types), key = lambda x: time.strptime(x[0], "%I:%M %p %b %d")))
+            #temp.sort(key = lambda x: time.strptime(x, "%I:%M %p %b %d"), reverse = True)
+            for i in range(len(final_times)):
+                if final_types[i] == 1:
+                    writer.write(final_times[i] + " - COMMENT\n")
+                else:
+                    writer.write(final_times[i] + " - REPLY\n")
         print("Output written to file " + args.verbose + ".")
-
+        writer.close()
+    elif args.full:
+        writer = open(args.full, "w")
+        for thread in master:
+            writer.write("****\n")
+            writer.write("SELECTED TEXT: " + thread.get_selected() + "\n")
+            users = thread.get_users()
+            comments = thread.get_comments()
+            times = thread.get_times()
+            for i in range(len(users)):
+                writer.write(users[i] + " (" + times[i] + "):\n")
+                writer.write(comments[i] + "\n")
+        print("Output written to file " + args.full + ".")
+        writer.close()
     else:
         names  = []
         for thread in master:
