@@ -48,6 +48,9 @@ Different behaviors from the script can be triggered by using options. Each opti
 `python runner.py --file mcdonald.txt --verbose newfile`
 will save the output into "newfile", creating it if it does not previously exist.
 
+**--full [FILE NAME]**: Writes all the comments, with all relevant information to a file. (Similar to what shows up in Google docs) File name must be provided, a new file will be created if it doesn't exist. 
+
+`python runner.py --file mcdonald.txt --full newfile`
 ## Notes
 
 ### What exactly is counted? 
