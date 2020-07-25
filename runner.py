@@ -22,7 +22,6 @@ def read_path(path):
     contents = []
     with open(path, "r") as input:
         lines = input.readlines()
-
         ## Get the case where the first name is copied fully
         ## Assert: the first line contains the name of the first comment, which must be then repeated
         ## in the next line, alone with time stamp. If this is not, then force it.
@@ -37,8 +36,12 @@ def read_path(path):
 
         markers = []
         lines = [x.replace("\n", "") if x.find("\n")>=0 else x for x in lines ]
+        special_case = -2
+        ## SELECT TEXT special case
         for i in range(len(lines)-1):
-            if lines[i+1].find(lines[i]) >=0:
+            if lines[i] == "SELECTED TEXT:":
+                special_case = i
+            if lines[i+1].find(lines[i]) >=0 and i != special_case+1:
                 lines[i+1] = lines[i+1].replace(lines[i], "")
                 if contains_time(lines[i+1]):
                     lines[i+1] = lines[i+1]
@@ -46,7 +49,8 @@ def read_path(path):
 
     markers.append(len(lines))
     # will strike if EXACT match
-    strikes = ["Suggestion accepted", "Suggestion rejected", "Add space", "Made a suggestion", "Marked as resolved"]
+    strikes = ["Suggestion accepted", "Suggestion rejected", "Add space", "Made a suggestion", "Marked as resolved",\
+               "Add paragraph", "Add tab", "Delete space", "Delete paragraph", "Delete tab" ]
     # will strike if INCLUDES match
     inclusion_strikes = ["Delete:", "Add:", "Replace:"]
     for i in range( len(markers)-1):
@@ -65,7 +69,6 @@ def read_path(path):
                 valid = True
         if valid:
             threads.append([x for x in entry if x != ""])
-
 
     return threads
 
