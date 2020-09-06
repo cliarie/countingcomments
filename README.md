@@ -4,6 +4,8 @@ This tool parses raw text input from a Google doc file and performs comprehensio
 
 In beta (errors possible!). Open source project.
 
+I have implemented this with a flask backend. http://countcomments.pythonanywhere.com/
+
 ## Basic Usage
 **Instructions specific for Mac OS X. Windows integration coming soon...
 
