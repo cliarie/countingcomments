@@ -2,6 +2,8 @@
 
 This tool parses raw text input from a Google doc file and performs comprehension of comments and replies, and queries relevant data. Useful for getting simple statistics about comments (participants, frequency, content, etc.).
 
+This was originally made for one of my English teachers from high school, but I imagine that anyone using a Google-doc commenting framework could benefit from this somewhat. It can be run locally through Terminal commands (Mac only) or can be used more generally using the web implementation (below).
+
 In beta (errors possible!). Open source project.
 
 I have implemented this with a flask backend. http://countcomments.pythonanywhere.com/
@@ -84,6 +86,10 @@ is equivalent to
 `python runner.py --file mcdonald.txt --stats`
 
 as far as the program is concerned.
+
+### Technical Details
+Backend: Python 3.8, using generic functions from pandas
+Frontend: Flask and HTML, nothing fancy.
 
 ## Suggestions/Comments?
 
