@@ -2,7 +2,7 @@
 import sys
 import argparse
 import re
-from thread import Thread
+from thread_hotfix import Thread
 import time
 
 # Helper: checks if a string is a time string
