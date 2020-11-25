@@ -86,6 +86,9 @@ class Thread():
         # Now we need a while loop because we do not know size and input is inconsistent
         if contents[-1] == "Reply or add others with @":
             contents = contents[:len(contents) -2]
+        if contents[-1] != "Reply•Resolve":
+            contents = contents[:len(contents) - 1]
+
         pin = pin + 1
         while pin < len(contents) -1 :
             pin = pin + 1
