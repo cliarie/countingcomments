@@ -17,9 +17,10 @@ def sort_alphabetical(l):
     l.sort(key = lambda s: s.split()[-1])
     return l
 
+# thread marker: "Selected text", "|"
 def read_path(path):
+    thread = []
     threads = []
-    contents = []
     with open(path, "r") as input:
         lines = input.readlines()
         ## Get the case where the first name is copied fully
@@ -38,15 +39,20 @@ def read_path(path):
         lines = [x.replace("\n", "") if x.find("\n")>=0 else x for x in lines ]
         special_case = -2
         ## SELECT TEXT special case
+        # for i in range(len(lines)-1):
+        #     if lines[i] == "Selected text":
+        #         special_case = i
+        #     if lines[i+1].find(lines[i]) >=0 and i != special_case+1:
+        #         lines[i+1] = lines[i+1].replace(lines[i], "")
+        #         if contains_time(lines[i+1]):
+        #             lines[i+1] = lines[i+1]
+        #             markers.append(i)
+        # cleaning duplicate names, adding markers at every time/date
         for i in range(len(lines)-1):
-            if lines[i] == "SELECTED TEXT:":
-                special_case = i
-            if lines[i+1].find(lines[i]) >=0 and i != special_case+1:
+            if lines[i+1].find(lines[i]) >= 0:
                 lines[i+1] = lines[i+1].replace(lines[i], "")
-                if contains_time(lines[i+1]):
-                    lines[i+1] = lines[i+1]
-                    markers.append(i)
-
+            if contains_time(lines[i+1]):
+                markers.append(i)
     markers.append(len(lines))
     # will strike if EXACT match
     strikes = ["Suggestion accepted", "Suggestion rejected", "Add space", "Made a suggestion", "Marked as resolved",\
@@ -55,7 +61,8 @@ def read_path(path):
     inclusion_strikes = ["Delete:", "Add:", "Replace:"]
     for i in range( len(markers)-1):
         valid = True
-        entry = lines[markers[i]:markers[i+1]]
+        entry = lines[markers[i]-1:markers[i+1]-1]
+
         # Marked as resolved is ok, if there is also "re-opened"
         for e in entry:
             if e in strikes:
@@ -68,8 +75,19 @@ def read_path(path):
             if e == "Re-opened":
                 valid = True
         if valid:
-            threads.append([x for x in entry if x != ""])
+            prev = ""
+            for x in entry:
+                if x != "":
+                    #print(x)
+                    if x != "Selected text" and x != "|" and prev != "|":
+                        thread.append(x)
+                    if (x == "Claire Chen" and len(thread)): # TO BE CHANGED ask for user name---David Clarke
+                        threads.append(thread)
+                        print(thread)
+                        thread = []
 
+                prev = x
+            # threads.append([x for x in entry if x != ""])
     return threads
 
 def main():
@@ -86,10 +104,12 @@ def main():
 
     master = []
     threads = read_path(args.file)
-    for i in range(len(threads)):
-        t = Thread()
-        t.process_text(threads[i])
-        master.append(t)
+
+    for t in threads:
+        thread = Thread()
+        thread.process_text(t)
+        master.append(thread)
+
 
     # Debug
     for thread in master:
@@ -115,11 +135,10 @@ def main():
         for thread in master:
             users = thread.get_users()
             for i in range(len(users)):
+                loc = names.index(users[i])
                 if i == 0:
-                    loc = names.index(users[i])
                     comments[loc] = comments[loc] + 1
                 else:
-                    loc = names.index(users[i])
                     replies[loc] = replies[loc] + 1
         print("Statistics of all students, with number of comments and replies.")
         print ('%-40s%-30s%-30s' % ("Name", "Number of Comments", "Number of Replies"))
@@ -187,11 +206,11 @@ def main():
         for thread in master:
             users = thread.get_users()
             for i in range(len(users)):
+                loc = names.index(users[i])
                 if i == 0:
-                    loc = names.index(users[i])
-                    comments[loc] = comments[loc] + 1
+                    comments[loc] += 1
                 else:
-                    replies[loc] = replies[loc] + 1
+                    replies[loc] +=1
         print("Statistics of all students, with number of comments and replies.")
         print ('%-40s%-30s%-30s' % ("Name", "Number of Comments", "Number of Replies"))
 

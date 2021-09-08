@@ -2,6 +2,9 @@
 # Class to represent a comment thread. Because comment thread is not fixed length, we want to use a more complex
 # structure than just list.
 
+# USING TIME/DATE TO TO FIND START END
+# new suggestion format: name, name, time + date, suggestion, your name
+# new comment format: "Selected text", "|", selected text, name, name, time + date, comment,..., your name
 
 class Thread():
 
@@ -54,54 +57,37 @@ class Thread():
         print(self.comments)
         print(self.times)
 
-
-    # Cleaning off some junk from the times
-    def clean_dates(self):
-        for i in range(len(self.times)):
-            dot = self.times[i].find("•")
-            if dot >=0:
-                self.times[i] = self.times[i][:dot]
     # Processing function. Input, the relevant text string, split into array by newlines ("\n")
     # Using a pin, go through each of the elements of the array subject to certain search conditions.
     # For first entry of each thread, date shows up on top.
     def process_text(self, contents):
         pin = 0
-        size = len(contents)
         name = contents[0]
         date = contents[1]
-        if contents[2] == "SELECTED TEXT:":
-            self.selected = contents[3]
-            #starting pin on 4
-            pin = 4
-        else:
-            pin = 2
-        # Fish for the first comment, it could have multiple lines!
-        # End codes: a string with Time, 'Reply•Resolve', 'Reply'
+        pin = 2
+
+        # Fish for the first comment, it could have multiple lines! (NEW: ONLY 1 LINE)
+        # End codes: line after string with time + date
         comment = contents[pin]
         # Peek at the next object
-        while contents[pin + 1] not in ["Reply•Resolve", "Reply"] and not self.contains_time(contents[pin + 1]):
+        while pin + 2 < len(contents) and not self.contains_time(contents[pin + 2]):
             pin = pin + 1
             comment += contents[pin]
         self.update(name, date, comment)
         # Now we need a while loop because we do not know size and input is inconsistent
-        if contents[-1] == "Reply or add others with @":
-            contents = contents[:len(contents) -2]
-        if contents[-1] != "Reply•Resolve":
-            contents = contents[:len(contents) - 1]
-
-        pin = pin + 1
-        while pin < len(contents) -1 :
-            pin = pin + 1
-            name = contents[pin]
-            comment = ""
-            while contents[pin + 1] not in ["Reply•Resolve", "Reply"] and not self.contains_time(contents[pin + 1]):
-                pin = pin + 1
-
-                comment += contents[pin]
-            pin = pin + 1
+        # if contents[-1] == "Reply or add others with @":
+        #     contents = contents[:len(contents) -2]
+        while pin + 3 < len(contents) :
+            pin += 1
+            if not self.contains_time(contents[pin]):
+                continue
             date = contents[pin]
+            name = contents[pin - 1]
+            comment = contents[pin+1]
+
+            while pin + 2 < len(contents) and not self.contains_time(contents[pin + 2]):
+                pin += 1
+                comment += contents[pin]
             #resolve and re-opening do not count
             if comment not in ['Marked as resolved', 'Re-opened']:
                 self.update(name, date, comment)
-
-        self.clean_dates()
